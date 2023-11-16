@@ -10,6 +10,7 @@ import OrderRouter from "./routes/OrderRoute.js";
 import { errorHandler, notFound } from "../backend/middleware/errorHadnler.js";
 import cookieParser from "cookie-parser";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import cors from "cors";
 
 const PORT = process.env.PORT || 5000;
 
@@ -20,6 +21,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: ["https://deploy-mern-frontend.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 app.use("/api/products", ProductRouter);
 app.use("/api/users", UserRouter);
